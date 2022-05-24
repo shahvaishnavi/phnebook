@@ -39,7 +39,7 @@ class _secondpageState extends State<secondpage> {
             height: 70,
             width: 200,
             margin: EdgeInsets.all(40),
-            child: TextField(
+            child: TextField(keyboardType: TextInputType.number,
               controller: Number,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -51,12 +51,17 @@ class _secondpageState extends State<secondpage> {
             String T1=Name.text;
             String T2=Number.text;
 
+
+              namests=false;
+              numbersts=false;
+
+
             setState(() {
              if(T1.isEmpty)
                {
                  namests=true;
                }
-             else if(T2.isEmpty)
+             if(T2.isEmpty)
                  {
                    numbersts=true;
                  }
