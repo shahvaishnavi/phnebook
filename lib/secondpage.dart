@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 class secondpage extends StatefulWidget {
@@ -31,7 +33,7 @@ class _secondpageState extends State<secondpage> {
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "enter your name",
-                  errorText: "Please enter valid name",labelText: "Name"),
+                  errorText: namests?"Please enter valid name":null,labelText: "Name"),
             ),
           ), Container(
             height: 70,
@@ -42,7 +44,7 @@ class _secondpageState extends State<secondpage> {
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "enter your number",
-                  errorText: "Please enter valid number",labelText: "Number"),
+                  errorText: numbersts?"ENTER YOUR VALID NUMBER":null,labelText: "Number"),
             ),
           ),
           ElevatedButton(onPressed: () {
@@ -50,7 +52,14 @@ class _secondpageState extends State<secondpage> {
             String T2=Number.text;
 
             setState(() {
-
+             if(T1.isEmpty)
+               {
+                 namests=true;
+               }
+             else if(T2.isEmpty)
+                 {
+                   numbersts=true;
+                 }
             });
           }, child:Text("add"))
         ],
