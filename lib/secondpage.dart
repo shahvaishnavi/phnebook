@@ -6,6 +6,8 @@ class secondpage extends StatefulWidget {
   @override
   State<secondpage> createState() => _secondpageState();
 }
+bool namests=false;
+bool numbersts=false;
 
 class _secondpageState extends State<secondpage> {
   @override
@@ -23,19 +25,40 @@ class _secondpageState extends State<secondpage> {
           Container(
             height: 70,
             width: 200,
-            margin: EdgeInsets.all(60),
+            margin: EdgeInsets.all(40),
             child: TextField(
               controller: Name,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
-              hintText: "enter your name"),
-
+                  border: OutlineInputBorder(),
+                  hintText: "enter your name",
+                  errorText: "Please enter valid name",labelText: "Name"),
             ),
-          )
+          ), Container(
+            height: 70,
+            width: 200,
+            margin: EdgeInsets.all(40),
+            child: TextField(
+              controller: Number,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "enter your number",
+                  errorText: "Please enter valid number",labelText: "Number"),
+            ),
+          ),
+          ElevatedButton(onPressed: () {
+            String T1=Name.text;
+            String T2=Number.text;
+
+            setState(() {
+
+            });
+          }, child:Text("add"))
         ],
       ),
     );
   }
 
   TextEditingController Name = TextEditingController();
+  TextEditingController Number = TextEditingController();
+
 }
