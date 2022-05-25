@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:phonebook/Dbhelper.dart';
 
 class secondpage extends StatefulWidget {
   const secondpage({Key? key}) : super(key: key);
 
   @override
   State<secondpage> createState() => _secondpageState();
+
 }
+
 bool namests=false;
 bool numbersts=false;
+
+
 
 class _secondpageState extends State<secondpage> {
   @override
@@ -61,6 +66,9 @@ class _secondpageState extends State<secondpage> {
                  {
                    numbersts=true;
                  }
+             else{
+               Dbhelper();
+             }
             });
           }, child:Text("add"))
         ],
