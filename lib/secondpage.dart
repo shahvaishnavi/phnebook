@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phonebook/Dbhelper.dart';
+import 'package:sqflite/sqflite.dart';
 
 class secondpage extends StatefulWidget {
   const secondpage({Key? key}) : super(key: key);
@@ -13,8 +14,9 @@ bool namests=false;
 bool numbersts=false;
 
 
-
 class _secondpageState extends State<secondpage> {
+  Database?Db;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +69,7 @@ class _secondpageState extends State<secondpage> {
                    numbersts=true;
                  }
              else{
-               Dbhelper();
+               Dbhelper().insertdata(T1, T2,Db!);
              }
             });
           }, child:Text("add"))
