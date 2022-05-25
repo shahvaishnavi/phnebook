@@ -18,6 +18,16 @@ class _secondpageState extends State<secondpage> {
   Database?Db;
 
   @override
+
+  @override
+  void initState() {
+  super.initState();
+  getdata();
+  }
+  void getdata() {
+
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -72,6 +82,10 @@ class _secondpageState extends State<secondpage> {
                Dbhelper().insertdata(T1, T2,Db!);
              }
             });
+
+            print("====NAME===$T1");
+            print("====NUMBER===$T2");
+
           }, child:Text("add"))
         ],
       ),
@@ -80,5 +94,6 @@ class _secondpageState extends State<secondpage> {
 
   TextEditingController Name = TextEditingController();
   TextEditingController Number = TextEditingController();
+
 
 }
