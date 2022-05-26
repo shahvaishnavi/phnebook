@@ -12,16 +12,25 @@ class Dbhelper {
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
       await db.execute(
-          'CREATE TABLE Test (id INTEGER PRIMARY KEY, name TEXT, value INTEGER, num REAL)');
+          'Create table phnebook (Id integer primary key autoincrement ,NAME text, CONTACT text)');
     });
     return database;
   }
 
-  insertdata(String name, String number, Database database) async {
+ Future<void> insertdata(String T1, String T2, Database database) async {
     String insert =
-        "insert into database (NAME,NUMBER) values('$name','$number')";
+        "insert into phnebook (NAME,CONTACT) values('$T1','$T2')";
 
     int cnt = await database.rawInsert(insert);
     print(cnt);
   }
+
+  Future<List<Map>> viewdata(Database database) async {
+    String select="select * from phnebook";
+    List<Map> list=await database.rawQuery(select);
+
+    print("======$list");
+    return list;
+  }
+
 }

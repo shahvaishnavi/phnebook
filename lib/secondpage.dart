@@ -2,30 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:phonebook/Dbhelper.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'main.dart';
+
 class secondpage extends StatefulWidget {
   const secondpage({Key? key}) : super(key: key);
 
   @override
   State<secondpage> createState() => _secondpageState();
-
 }
 
-bool namests=false;
-bool numbersts=false;
-
+bool namests = false;
+bool numbersts = false;
 
 class _secondpageState extends State<secondpage> {
-  Database?Db;
+  Database? Db;
 
   @override
-
   @override
   void initState() {
-  super.initState();
-  getdata();
+    super.initState();
+    getdata();
   }
-  void getdata() {
 
+  void getdata() {
+    Dbhelper().datacollect().then((value) {
+      setState(() {
+        Db = value;
+      });
+    });
   }
 
   Widget build(BuildContext context) {
@@ -48,45 +52,53 @@ class _secondpageState extends State<secondpage> {
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "enter your name",
-                  errorText: namests?"Please enter valid name":null,labelText: "Name"),
+                  errorText: namests ? "Please enter valid name" : null,
+                  labelText: "Name"),
             ),
-          ), Container(
+          ),
+          Container(
             height: 70,
             width: 200,
             margin: EdgeInsets.all(40),
-            child: TextField(keyboardType: TextInputType.number,
+            child: TextField(
+              keyboardType: TextInputType.number,
               controller: Number,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "enter your number",
-                  errorText: numbersts?"ENTER YOUR VALID NUMBER":null,labelText: "Number"),
+                  errorText: numbersts ? "ENTER YOUR VALID NUMBER" : null,
+                  labelText: "Number"),
             ),
           ),
-          ElevatedButton(onPressed: () {
-            String T1=Name.text;
-            String T2=Number.text;
+          ElevatedButton(
+              onPressed: () {
+                String T1 = Name.text;
+                String T2 = Number.text;
 
-              namests=false;
-              numbersts=false;
+                namests = false;
+                numbersts = false;
 
-            setState(() {
-             if(T1.isEmpty)
-               {
-                 namests=true;
-               }
-             if(T2.isEmpty)
-                 {
-                   numbersts=true;
-                 }
-             else{
-               Dbhelper().insertdata(T1, T2,Db!);
-             }
-            });
+                setState(() {
+                  if (T1.isEmpty) {
+                    namests = true;
+                  }
+                  if (T2.isEmpty) {
+                    numbersts = true;
+                  } else {
+                    Dbhelper().insertdata(T1, T2, Db!).then((value) {
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder: (context) {
+                          return contactbook();
+                        },
+                      ));
+                    });
+                  }
+                });
 
-            print("====NAME===$T1");
-            print("====NUMBER===$T2");
-
-          }, child:Text("add"))
+                print("====NAME===$T1");
+                print("====NUMBER===$T2");
+              },
+              child: Text("add"))
         ],
       ),
     );
@@ -94,6 +106,4 @@ class _secondpageState extends State<secondpage> {
 
   TextEditingController Name = TextEditingController();
   TextEditingController Number = TextEditingController();
-
-
 }

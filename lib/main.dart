@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:phonebook/Dbhelper.dart';
 import 'package:phonebook/secondpage.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -15,6 +17,26 @@ class contactbook extends StatefulWidget {
 }
 
 class _contactbookState extends State<contactbook> {
+  Database?Db;
+  List<Map> userdata=[];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    database();
+  }
+  void database() {
+  Dbhelper().datacollect().then((value) {
+    setState(() {
+      Db=value;
+      Dbhelper().viewdata(Db!).then((listofmap) {
+        setState(() {
+          userdata=listofmap;
+        });
+      },);
+    });
+  });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,4 +58,6 @@ class _contactbookState extends State<contactbook> {
           )),
     );
   }
+
+
 }
