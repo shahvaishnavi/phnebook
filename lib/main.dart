@@ -56,6 +56,19 @@ class _contactbookState extends State<contactbook> {
             "Contactbook",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           )),
+      body: ListView.builder(itemBuilder: (context, index) {
+        return Card(
+          margin: EdgeInsets.all(10),
+          color: Colors.grey,
+          shadowColor: Colors.indigo,
+          child: ListTile(trailing: IconButton(onPressed: () {
+            
+          }, icon: Icon(Icons.more_vert)),
+          subtitle: Text("${userdata[index]['CONTACT']}"),
+          title: Text("${userdata[index]['NAME']}"),
+          leading: Text("${userdata[index]['ID']}"),),
+        );
+      },),
     );
   }
 
