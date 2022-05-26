@@ -56,7 +56,7 @@ class _contactbookState extends State<contactbook> {
             "Contactbook",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           )),
-      body: ListView.builder(itemBuilder: (context, index) {
+      body: ListView.builder(itemCount: userdata.length,itemBuilder: (context, index) {
         return Card(
           margin: EdgeInsets.all(10),
           color: Colors.grey,
