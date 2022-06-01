@@ -33,4 +33,14 @@ class Dbhelper {
     return list;
   }
 
+    static Future<void> deletedata(int Id,Database database) async {
+    String delete="delete from phnebook where ID = ('$Id')";
+    await database.rawDelete(delete);
+    return Future.value();
+  }
+
+  void updatedata() {
+
+  }
+
 }

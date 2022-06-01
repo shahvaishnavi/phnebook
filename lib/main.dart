@@ -18,25 +18,28 @@ class contactbook extends StatefulWidget {
 
 class _contactbookState extends State<contactbook> {
   Database?Db;
-  List<Map> userdata=[];
+  List<Map> userdata = [];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     database();
   }
+
   void database() {
-  Dbhelper().datacollect().then((value) {
-    setState(() {
-      Db=value;
-      Dbhelper().viewdata(Db!).then((listofmap) {
-        setState(() {
-          userdata=listofmap;
-        });
-      },);
+    Dbhelper().datacollect().then((value) {
+      setState(() {
+        Db = value;
+        Dbhelper().viewdata(Db!).then((listofmap) {
+          setState(() {
+            userdata = listofmap;
+          });
+        },);
+      });
     });
-  });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,19 +59,35 @@ class _contactbookState extends State<contactbook> {
             "Contactbook",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           )),
-      body: ListView.builder(itemCount: userdata.length,itemBuilder: (context, index) {
+      body: ListView.builder(
+        itemCount: userdata.length, itemBuilder: (context, index) {
         return Card(
-          margin: EdgeInsets.all(10),
-          color: Colors.grey,
-          shadowColor: Colors.indigo,
-          child: ListTile(trailing: IconButton(onPressed: () {
-            
-          }, icon: Icon(Icons.more_vert)),
-          subtitle: Text("${userdata[index]['CONTACT']}"),
-          title: Text("${userdata[index]['NAME']}"),
-          leading: Text("${userdata[index]['ID']}"),),
+            margin: EdgeInsets.all(10),
+            color: Colors.grey,
+            shadowColor: Colors.indigo,
+            child: ListTile(trailing: PopupMenuButton(onSelected: ((value) {
+
+            }), itemBuilder: (context) {
+              return [PopupMenuItem(value: 0, child: Text("delete"), onTap: () {
+                int Id = userdata[index]['ID'];
+                Dbhelper.deletedata(Id, Db!).then((value) {
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (context) {
+                      return contactbook();
+                  },));
+                });
+              },),
+              PopupMenuItem(value: 1,child: Text("update"),onTap:(){
+                int Id =userdata[index]['ID'];
+                Dbhelper().updatedata();
+              },)
+              ];
+            },),
+        subtitle: Text("${userdata[index]['CONTACT']}"),
+        title: Text("${userdata[index]['NAME']}"),
+        leading: Text("${userdata[index]['ID']}"),),
         );
-      },),
+        },),
     );
   }
 
