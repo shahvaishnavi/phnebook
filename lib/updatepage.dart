@@ -10,7 +10,14 @@ class updatepage extends StatefulWidget {
 class _updatepageState extends State<updatepage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+            child: Text(
+          "new contact",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        )),
+      ),
+    );
   }
 }
-
