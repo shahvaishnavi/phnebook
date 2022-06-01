@@ -79,7 +79,11 @@ class _contactbookState extends State<contactbook> {
               },),
               PopupMenuItem(value: 1,child: Text("update"),onTap:(){
                 int Id =userdata[index]['ID'];
-                Dbhelper().updatedata();
+                Dbhelper().updatedata(newname,newnumber,Id,Db!).then((value){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                    return contactbook();
+                  },));
+                });
               },)
               ];
             },),
