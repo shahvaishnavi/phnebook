@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 
 class updatepage extends StatefulWidget {
   const updatepage({Key? key}) : super(key: key);
@@ -9,8 +8,17 @@ class updatepage extends StatefulWidget {
   State<updatepage> createState() => _updatepageState();
 }
 bool namests=false;
+bool numbersts=false;
+Database?Db;
+
 class _updatepageState extends State<updatepage> {
   @override
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -28,12 +36,23 @@ class _updatepageState extends State<updatepage> {
             child: TextField(
               controller: newname,
               decoration: InputDecoration(
-                  labelText: "NAME",
-                  errorText: namests?"PLEASE ENTER YOUR NAME":null,
-                  hintText: "ADD NAME",
-                  border: OutlineInputBorder(),
-            ),
-          ),),
+                labelText: "NAME",
+                errorText: namests?"PLEASE ENTER YOUR NAME":null,
+                hintText: "ADD NAME",
+                border: OutlineInputBorder(),
+              ),),),
+          Container(
+            height: 70,
+            width: 250,
+            child: TextField(
+              controller: newname,
+              decoration: InputDecoration(
+                labelText: "NUMBER",
+                errorText: numbersts?"PLEASE ENTER YOUR NUMBER":null,
+                hintText: "ADD NUMBER",
+                border: OutlineInputBorder(),
+              ),
+            ),),
           ElevatedButton(onPressed: () {
 
           }, child: Text("add data"))
@@ -41,5 +60,7 @@ class _updatepageState extends State<updatepage> {
       ),
     );
   }
+
   TextEditingController newname = TextEditingController();
+  TextEditingController newnumber = TextEditingController();
 }
