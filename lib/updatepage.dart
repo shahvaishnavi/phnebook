@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:phonebook/Dbhelper.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'main.dart';
 
 class updatepage extends StatefulWidget {
   const updatepage({Key? key}) : super(key: key);
@@ -54,7 +57,31 @@ class _updatepageState extends State<updatepage> {
               ),
             ),),
           ElevatedButton(onPressed: () {
+          String T3=newname.text;
+          String T4=newnumber.text;
 
+          namests=false;
+          numbersts=false;
+          setState(() {
+            if(T3.isEmpty)
+              {
+                namests=true;
+              }
+            if(T4.isEmpty)
+              {
+                numbersts=true;
+              }
+            else
+              {
+                Dbhelper().updatedata(T3, T4, ID, database).then((value) {
+                 return Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) {
+                      return contactbook();
+                    },
+                  ));
+                });
+              }
+          });
           }, child: Text("add data"))
         ],
       ),
