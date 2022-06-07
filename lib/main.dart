@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:phonebook/Dbhelper.dart';
 import 'package:phonebook/secondpage.dart';
@@ -53,7 +55,13 @@ class _contactbookState extends State<contactbook> {
           ));
         },
       ),
-      appBar: AppBar(
+      appBar: searchdata?AppBar(
+          centerTitle: true,
+          title: Text(
+            "Contactbook",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ))  :AppBar(
+
           centerTitle: true,
           title: Text(
             "Contactbook",
@@ -79,7 +87,7 @@ class _contactbookState extends State<contactbook> {
               },),
               PopupMenuItem(value: 1,child: Text("update"),onTap:(){
                 int Id =userdata[index]['ID'];
-                Dbhelper().updatedata(newname,newnumber,Id,Db!).then((value){
+                Dbhelper().updatedata(Newname,Newnumber,Id,Db!).then((value){
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
                     return contactbook();
                   },));
@@ -94,6 +102,6 @@ class _contactbookState extends State<contactbook> {
         },),
     );
   }
-
+bool searchdata=false;
 
 }

@@ -39,9 +39,9 @@ class Dbhelper {
     return Future.value();
   }
 
-  Future<void> updatedata(String T3,String T4,int ID,Database database) async {
+  Future<void> updatedata(String T3,String T4,int Id, Db ) async {
   String update="update from phnebook set NAME ='$T3',NUMBER='$T4',where id='ID'";
-  await database.rawUpdate(update);
+  await Db.rawUpdate(update);
   return Future.value();
   }
 

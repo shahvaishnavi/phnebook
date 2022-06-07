@@ -15,6 +15,8 @@ bool numbersts=false;
 Database?Db;
 
 class _updatepageState extends State<updatepage> {
+  int ?ID;
+
   @override
   @override
   void initState() {
@@ -73,7 +75,7 @@ class _updatepageState extends State<updatepage> {
               }
             else
               {
-                Dbhelper().updatedata(T3, T4, ID, database).then((value) {
+                Dbhelper().updatedata(T3, T4,ID!, Db!).then((value) {
                  return Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) {
                       return contactbook();
