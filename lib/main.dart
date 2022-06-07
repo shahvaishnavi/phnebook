@@ -105,8 +105,9 @@ class _contactbookState extends State<contactbook> {
               )),
             ),
       body: ListView.builder(
-        itemCount: userdata.length,
+        itemCount: searchdata?searchlist.length:userdata.length,
         itemBuilder: (context, index) {
+          Map mapp=searchdata?searchlist[index]:userdata[index];
           return Card(
             margin: EdgeInsets.all(10),
             color: Colors.grey,
@@ -149,9 +150,9 @@ class _contactbookState extends State<contactbook> {
                   ];
                 },
               ),
-              subtitle: Text("${userdata[index]['CONTACT']}"),
-              title: Text("${userdata[index]['NAME']}"),
-              leading: Text("${userdata[index]['ID']}"),
+              subtitle: Text("${mapp['CONTACT']}"),
+              title: Text("${mapp['NAME']}"),
+              leading: Text("${mapp['ID']}"),
             ),
           );
         },
