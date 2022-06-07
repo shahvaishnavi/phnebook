@@ -159,6 +159,5 @@ class _contactbookState extends State<contactbook> {
       ),
     );
   }
-
   bool searchdata = false;
 }
