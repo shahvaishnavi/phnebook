@@ -62,34 +62,47 @@ class _contactbookState extends State<contactbook> {
       appBar: searchdata
           ? AppBar(
               title: TextField(
-                decoration: InputDecoration(suffix: IconButton(onPressed: () {
+                decoration: InputDecoration(
+                    suffix: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            searchdata = false;
+                            searchlist = userdata;
+                          });
+                        },
+                        icon: Icon(Icons.close))),
+                onChanged: (value) {
                   setState(() {
-                    searchdata=false;
-                    searchlist=userdata;
-                  });
-                }, icon: Icon(Icons.close))),onChanged: (value){
-                  setState(() {
-                    if(value.isNotEmpty)
-                      {
-                        searchlist=[];
-                        for(int i=0;i<userdata.length;i++)
-                        {
-                          String name="${userdata[i]['NAME']}";
-                          if(name.toLowerCase().contains(value.toLowerCase()))
-                            {
-                              searchlist.add(userdata[i]);
-                            }
+                    if (value.isNotEmpty) {
+                      searchlist = [];
+                      for (int i = 0; i < userdata.length; i++) {
+                        String name = "${userdata[i]['NAME']}";
+                        if (name.toLowerCase().contains(value.toLowerCase())) {
+                          searchlist.add(userdata[i]);
                         }
                       }
+                    } else {
+                      searchlist = userdata;
+                    }
                   });
-              },
+                },
               ),
             )
-
-
-
           : AppBar(
-              title: TextField(),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        searchdata = true;
+                      });
+                    },
+                    icon: Icon(Icons.search))
+              ],
+              title: Center(
+                  child: Text(
+                "addnew",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              )),
             ),
       body: ListView.builder(
         itemCount: userdata.length,
