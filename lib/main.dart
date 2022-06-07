@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:phonebook/Dbhelper.dart';
 import 'package:phonebook/secondpage.dart';
@@ -19,11 +17,12 @@ class contactbook extends StatefulWidget {
 }
 
 class _contactbookState extends State<contactbook> {
-  Database?Db;
+  Database? Db;
   List<Map> userdata = [];
+  List<Map> searchlist = [];
 
-  String newnumber='T3';
-  String Newname='T4';
+  String newnumber = 'T3';
+  String Newname = 'T4';
 
   @override
   void initState() {
@@ -36,11 +35,13 @@ class _contactbookState extends State<contactbook> {
     Dbhelper().datacollect().then((value) {
       setState(() {
         Db = value;
-        Dbhelper().viewdata(Db!).then((listofmap) {
-          setState(() {
-            userdata = listofmap;
-          });
-        },);
+        Dbhelper().viewdata(Db!).then(
+          (listofmap) {
+            setState(() {
+              userdata = listofmap;
+            });
+          },
+        );
       });
     });
   }
@@ -58,52 +59,92 @@ class _contactbookState extends State<contactbook> {
           ));
         },
       ),
-      appBar: searchdata?AppBar(
-          centerTitle: true,
-          title: Text(
-            "Contactbook",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ))  :AppBar(
+      appBar: searchdata
+          ? AppBar(
+              title: TextField(
+                decoration: InputDecoration(suffix: IconButton(onPressed: () {
+                  setState(() {
+                    searchdata=false;
+                    searchlist=userdata;
+                  });
+                }, icon: Icon(Icons.close))),onChanged: (value){
+                  setState(() {
+                    if(value.isNotEmpty)
+                      {
+                        searchlist=[];
+                        for(int i=0;i<userdata.length;i++)
+                        {
+                          String name="${userdata[i]['NAME']}";
+                          if(name.toLowerCase().contains(value.toLowerCase()))
+                            {
+                              searchlist.add(userdata[i]);
+                            }
+                        }
+                      }
+                  });
+              },
+              ),
+            )
 
-          centerTitle: true,
-          title: Text(
-            "Contactbook",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          )),
+
+
+          : AppBar(
+              title: TextField(),
+            ),
       body: ListView.builder(
-        itemCount: userdata.length, itemBuilder: (context, index) {
-        return Card(
+        itemCount: userdata.length,
+        itemBuilder: (context, index) {
+          return Card(
             margin: EdgeInsets.all(10),
             color: Colors.grey,
             shadowColor: Colors.indigo,
-            child: ListTile(trailing: PopupMenuButton(onSelected: ((value) {
-
-            }), itemBuilder: (context) {
-              return [PopupMenuItem(value: 0, child: Text("delete"), onTap: () {
-                int Id = userdata[index]['ID'];
-                Dbhelper.deletedata(Id, Db!).then((value) {
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (context) {
-                      return contactbook();
-                  },));
-                });
-              },),
-              PopupMenuItem(value: 1,child: Text("update"),onTap:(){
-                int Id =userdata[index]['ID'];
-                Dbhelper().updatedata(Newname,newnumber,Id,Db!).then((value){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                    return contactbook();
-                  },));
-                });
-              },)
-              ];
-            },),
-        subtitle: Text("${userdata[index]['CONTACT']}"),
-        title: Text("${userdata[index]['NAME']}"),
-        leading: Text("${userdata[index]['ID']}"),),
-        );
-        },),
+            child: ListTile(
+              trailing: PopupMenuButton(
+                onSelected: ((value) {}),
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      value: 0,
+                      child: Text("delete"),
+                      onTap: () {
+                        int Id = userdata[index]['ID'];
+                        Dbhelper.deletedata(Id, Db!).then((value) {
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) {
+                              return contactbook();
+                            },
+                          ));
+                        });
+                      },
+                    ),
+                    PopupMenuItem(
+                      value: 1,
+                      child: Text("update"),
+                      onTap: () {
+                        int Id = userdata[index]['ID'];
+                        Dbhelper()
+                            .updatedata(Newname, newnumber, Id, Db!)
+                            .then((value) {
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) {
+                              return contactbook();
+                            },
+                          ));
+                        });
+                      },
+                    )
+                  ];
+                },
+              ),
+              subtitle: Text("${userdata[index]['CONTACT']}"),
+              title: Text("${userdata[index]['NAME']}"),
+              leading: Text("${userdata[index]['ID']}"),
+            ),
+          );
+        },
+      ),
     );
   }
-bool searchdata=false;
+
+  bool searchdata = false;
 }
