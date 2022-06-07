@@ -22,6 +22,9 @@ class _contactbookState extends State<contactbook> {
   Database?Db;
   List<Map> userdata = [];
 
+  String newnumber='T3';
+  String Newname='T4';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -87,7 +90,7 @@ class _contactbookState extends State<contactbook> {
               },),
               PopupMenuItem(value: 1,child: Text("update"),onTap:(){
                 int Id =userdata[index]['ID'];
-                Dbhelper().updatedata(Newname,Newnumber,Id,Db!).then((value){
+                Dbhelper().updatedata(Newname,newnumber,Id,Db!).then((value){
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
                     return contactbook();
                   },));
@@ -103,5 +106,4 @@ class _contactbookState extends State<contactbook> {
     );
   }
 bool searchdata=false;
-
 }
